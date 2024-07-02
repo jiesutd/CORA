@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QH
                              QPushButton, QLabel, QLineEdit, QTextEdit, QTableWidget, 
                              QTableWidgetItem, QHeaderView, QFileDialog, QMessageBox, QInputDialog,
                              QListWidget, QComboBox, QDateEdit, QRadioButton, QButtonGroup, QGridLayout)
-from PyQt5.QtCore import Qt, QDateTime, QTime,  QDate
+from PyQt5.QtCore import Qt, QDateTime, QTime,  QDate, QTimer
 from PyQt5.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
 
 ## enable adjust column width of annotation panel
@@ -51,6 +51,29 @@ class AnnotationTool(QMainWindow):
         self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', '+']
         self.load_keywords = {}
         self.annotation_start_times = {}
+        
+        # Create status bar
+        self.statusBar = self.statusBar()
+        self.patient_count_label = QLabel()
+        self.record_count_label = QLabel()
+        self.current_time_label = QLabel()
+        self.total_time_cost_label = QLabel()
+        self.current_case_time_label = QLabel()
+
+        self.statusBar.addPermanentWidget(self.patient_count_label)
+        self.statusBar.addPermanentWidget(self.record_count_label)
+        self.statusBar.addPermanentWidget(self.current_time_label)
+        self.statusBar.addPermanentWidget(self.total_time_cost_label)
+        self.statusBar.addPermanentWidget(self.current_case_time_label)
+
+        # Start timer for updating status bar
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_status_bar)
+        self.timer.start(1000)  # Update every second
+
+        # Initialize total time cost and current case time
+        self.total_time_cost = 0
+        self.current_case_start_time = QDateTime.currentDateTime()
 
     def initUI(self):
         self.setWindowTitle('CORA-alpha')
@@ -73,7 +96,7 @@ class AnnotationTool(QMainWindow):
         self.annotation_level_label = QLabel("Annotation Level:")
         self.patient_level_radio = QRadioButton("Patient")
         self.record_level_radio = QRadioButton("Record")
-        self.record_level_radio.setChecked(True)  # Default to record level
+        self.patient_level_radio.setChecked(True)  # Default to patient level
         # Create a button group
         self.annotation_level_group = QButtonGroup(self)
         self.annotation_level_group.addButton(self.patient_level_radio)
@@ -228,6 +251,9 @@ class AnnotationTool(QMainWindow):
             self.update_display()
             # Set CSV file path
             self.csv_file_path = file_path.rsplit('.', 1)[0] + '_annotations.csv'
+            # Reset total time cost and current case time
+            self.total_time_cost = 0
+            self.current_case_start_time = QDateTime.currentDateTime()
         self.is_switching_levels = False
         
     def parse_xml(self, file_path):
@@ -302,6 +328,9 @@ class AnnotationTool(QMainWindow):
         selected_patient = self.patient_id_combo.currentText()
         selected_record_type = self.record_type_combo.currentText()
         selected_record = self.record_id_combo.currentText()
+        # Reset current case start time
+        self.current_case_start_time = QDateTime.currentDateTime()
+        
         self.filtered_records = self.records.copy()
         if selected_patient != "All":
             self.filtered_records = [record for record in self.filtered_records if record['PatientID'] == selected_patient]
@@ -333,6 +362,9 @@ class AnnotationTool(QMainWindow):
         current_id = self.get_current_id()
         if current_id not in self.annotation_start_times:
             self.annotation_start_times[current_id] = QDateTime.currentDateTime()
+        
+        # Reset current case start time
+        self.current_case_start_time = QDateTime.currentDateTime()
 
     def get_current_id(self):
         if self.patient_level_radio.isChecked():
@@ -365,6 +397,32 @@ class AnnotationTool(QMainWindow):
             self.update_keyword_table()
             self.highlight_keywords()
         
+    def update_status_bar(self):
+        # Update patient count
+        total_patients = len(set(record['PatientID'] for record in self.records))
+        self.patient_count_label.setText(f"Total Patients: {total_patients}")
+
+        # Update record count
+        total_records = len(self.records)
+        self.record_count_label.setText(f"Total Records: {total_records}")
+
+        # Update current time
+        current_time = QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
+        self.current_time_label.setText(f"Current Time: {current_time}")
+
+        # Update total time cost
+        self.total_time_cost += 1  # Increment by 1 second
+        total_hours, total_remainder = divmod(self.total_time_cost, 3600)
+        total_minutes, total_seconds = divmod(total_remainder, 60)
+        total_time_cost_str = f"{total_hours:02d}:{total_minutes:02d}:{total_seconds:02d}"
+        self.total_time_cost_label.setText(f"Total Annotation Time: {total_time_cost_str}")
+
+        # Update current case waiting time
+        current_case_time = self.current_case_start_time.secsTo(QDateTime.currentDateTime())
+        case_hours, case_remainder = divmod(current_case_time, 3600)
+        case_minutes, case_seconds = divmod(case_remainder, 60)
+        case_time_str = f"{case_hours:02d}:{case_minutes:02d}:{case_seconds:02d}"
+        self.current_case_time_label.setText(f"Current Case Time: {case_time_str}")
 
     def highlight_keywords(self):
         keywords = [keyword for keyword in self.keyword_entry.text().split(',') if keyword.strip()]
@@ -555,6 +613,8 @@ class AnnotationTool(QMainWindow):
                     
                     # Reset start time for the next annotation
                     self.annotation_start_times[current_id] = end_time
+                    # Reset current case start time
+                    self.current_case_start_time = QDateTime.currentDateTime()
                 
                 self.save_current_annotations()
             finally:
