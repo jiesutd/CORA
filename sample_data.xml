@@ -1,0 +1,1313 @@
+<CHANL_xml>
+    <ROW>
+        <COLUMN NAME="PatientID"> 12345</COLUMN>
+        <COLUMN NAME="RecordID"> 999999</COLUMN>
+        <COLUMN NAME="Record_Date"> 2007-05-06 00:00:00 </COLUMN>
+        <COLUMN NAME="Record_Type"> PRG</COLUMN>
+        <COLUMN NAME="Record"> Reason for Admission:
+   The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+   Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+   Hospital Course:
+   During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+   
+   Medical Management:
+   
+   Wound care provided for lacerations, including cleaning, suturing, and dressing.
+   Administration of antibiotics to prevent infection.
+   Regular monitoring of vital signs, all of which remained stable throughout the stay.
+   Psychiatric Evaluation:
+   
+   Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+   Initiation of antidepressant therapy with Sertraline 50 mg daily.
+   Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+   Therapeutic Interventions:
+   
+   Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+   Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+   Social Work and Case Management:
+   
+   Assessment for social support and development of a safety plan.
+   Referrals provided for outpatient follow-up with community mental health services and support groups.
+   Discharge Plan:
+   The patient is being discharged in stable condition with the following plan:
+   
+   Medications:
+   
+   Sertraline 50 mg, take one tablet daily.
+   Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+   Follow-up Appointments:
+   
+   Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+   Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+   Therapeutic Services:
+   
+   Continue with individual therapy sessions at Horizon Behavioral Health.
+   Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+   Safety Plan:
+   
+   Removal of sharp objects and medications from accessible areas in the home.
+   Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+   Educational Materials:
+   
+   Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+   Emergency Instructions:
+   
+   In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+   Summary:
+   The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+    <ROW>
+     <COLUMN NAME="PatientID"> 12345</COLUMN>
+     <COLUMN NAME="RecordID"> 23456</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+    <COLUMN NAME="PatientID"> 12345</COLUMN>
+    <COLUMN NAME="RecordID"> cvbnjg</COLUMN>
+    <COLUMN NAME="Record_Date"> 2011-06-06 00:00:00 </COLUMN>
+    <COLUMN NAME="Record_Type"> DIS</COLUMN>
+    <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+</ROW>
+<ROW>
+    <COLUMN NAME="PatientID"> 12345</COLUMN>
+    <COLUMN NAME="RecordID"> abcdef</COLUMN>
+    <COLUMN NAME="Record_Date"> 2018-09-06 00:00:00 </COLUMN>
+    <COLUMN NAME="Record_Type"> DIS</COLUMN>
+    <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+</ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12346</COLUMN>
+     <COLUMN NAME="RecordID"> 23457</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12347</COLUMN>
+     <COLUMN NAME="RecordID"> 23458</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12348</COLUMN>
+     <COLUMN NAME="RecordID"> 23459</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12349</COLUMN>
+     <COLUMN NAME="RecordID"> 23460</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12350</COLUMN>
+     <COLUMN NAME="RecordID"> 23461</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12351</COLUMN>
+     <COLUMN NAME="RecordID"> 23462</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12352</COLUMN>
+     <COLUMN NAME="RecordID"> 23463</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12353</COLUMN>
+     <COLUMN NAME="RecordID"> 23464</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12354</COLUMN>
+     <COLUMN NAME="RecordID"> 23465</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12355</COLUMN>
+     <COLUMN NAME="RecordID"> 23466</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12356</COLUMN>
+     <COLUMN NAME="RecordID"> 23467</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12357</COLUMN>
+     <COLUMN NAME="RecordID"> 23468</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12358</COLUMN>
+     <COLUMN NAME="RecordID"> 23469</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12359</COLUMN>
+     <COLUMN NAME="RecordID"> 23470</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12360</COLUMN>
+     <COLUMN NAME="RecordID"> 23471</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12361</COLUMN>
+     <COLUMN NAME="RecordID"> 23472</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12362</COLUMN>
+     <COLUMN NAME="RecordID"> 23473</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12363</COLUMN>
+     <COLUMN NAME="RecordID"> 23474</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+ <ROW>
+     <COLUMN NAME="PatientID"> 12364</COLUMN>
+     <COLUMN NAME="RecordID"> 23475</COLUMN>
+     <COLUMN NAME="Record_Date"> 2010-05-06 00:00:00 </COLUMN>
+     <COLUMN NAME="Record_Type"> DIS</COLUMN>
+     <COLUMN NAME="Record"> Reason for Admission:
+The patient was admitted to Mercy General Hospital on April 20, 2024, following an episode of self-harm involving multiple lacerations to the left forearm. The patient presented with moderate bleeding and reported a history of chronic depression and anxiety. The patient has suicide intention.
+Self-Injurious Behavior Poisoning by aspirin, intentional self-harm
+Hospital Course:
+During the hospital stay, the patient was evaluated and treated by the medical and psychiatric teams. Key interventions included:
+
+Medical Management:
+
+Wound care provided for lacerations, including cleaning, suturing, and dressing.
+Administration of antibiotics to prevent infection.
+Regular monitoring of vital signs, all of which remained stable throughout the stay.
+Psychiatric Evaluation:
+
+Comprehensive psychiatric evaluation conducted, confirming diagnoses of Major Depressive Disorder and Anxiety Disorder.
+Initiation of antidepressant therapy with Sertraline 50 mg daily.
+Introduction of PRN (as needed) Lorazepam 0.5 mg for acute anxiety episodes.
+Therapeutic Interventions:
+
+Individual therapy sessions focused on cognitive-behavioral strategies and identifying triggers for self-harm.
+Family therapy sessions were conducted to educate and involve family members in the patient’s treatment plan.
+Social Work and Case Management:
+
+Assessment for social support and development of a safety plan.
+Referrals provided for outpatient follow-up with community mental health services and support groups.
+Discharge Plan:
+The patient is being discharged in stable condition with the following plan:
+
+Medications:
+
+Sertraline 50 mg, take one tablet daily.
+Lorazepam 0.5 mg, take one tablet as needed for anxiety (not to exceed 3 tablets per day).
+Follow-up Appointments:
+
+Psychiatric follow-up with Dr. Emily Carter on May 10, 2024.
+Primary care follow-up with Dr. Robert Lee on May 15, 2024.
+Therapeutic Services:
+
+Continue with individual therapy sessions at Horizon Behavioral Health.
+Attend group therapy sessions at the local community center every Wednesday at 6 PM.
+Safety Plan:
+
+Removal of sharp objects and medications from accessible areas in the home.
+Emergency contacts include the Crisis Hotline (1-800-273-8255) and local emergency services (911).
+Educational Materials:
+
+Provided educational materials on coping strategies for self-harm, signs of relapse, and available support resources.
+Emergency Instructions:
+
+In case of a crisis or emergency, the patient is instructed to go to the nearest emergency room or contact the crisis hotline at 1-800-273-8255.
+Summary:
+The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
+ </ROW>
+</CHANL_xml>
