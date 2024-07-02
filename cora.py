@@ -43,13 +43,14 @@ class AnnotationTool(QMainWindow):
         self.records = []
         self.filtered_records = []
         self.is_switching_levels = False ## if switching annotation level, patient vs record
+        self._is_updating = False  # if the annotation table is updating
         self.custom_column_count = 0  # To keep track of added columns
         self.patient_annotations = {}  # To store patient-level annotations
         self.record_annotations = {}   # To store record-level annotations
-        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Time Cost', 'Annotation', '+']
-        self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Time Cost', 'Annotation', '+']
-        
+        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', '+']
+        self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', '+']
         self.load_keywords = {}
+        self.annotation_start_times = {}
 
     def initUI(self):
         self.setWindowTitle('CORA-alpha')
@@ -140,16 +141,21 @@ class AnnotationTool(QMainWindow):
         self.keyword_table.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
         left_panel.addWidget(self.keyword_table)        
         
-        # Annotation controls
-        annotation_controls = QHBoxLayout()
-        self.start_annotation_button = QPushButton("Start Annotation")
-        self.end_annotation_button = QPushButton("End Annotation")
-        self.end_annotation_button.setEnabled(False)
-        self.start_annotation_button.clicked.connect(self.start_annotation)
-        self.end_annotation_button.clicked.connect(self.end_annotation)
-        annotation_controls.addWidget(self.start_annotation_button)
-        annotation_controls.addWidget(self.end_annotation_button)
-        left_panel.addLayout(annotation_controls)
+        ## add file save button
+        self.save_button = QPushButton("Save Annotation")
+        self.save_button.clicked.connect(self.save_annotation_to_file)
+        left_panel.addWidget(self.save_button)
+        
+        # # Annotation controls
+        # annotation_controls = QHBoxLayout()
+        # self.start_annotation_button = QPushButton("Start Annotation")
+        # self.end_annotation_button = QPushButton("End Annotation")
+        # self.end_annotation_button.setEnabled(False)
+        # self.start_annotation_button.clicked.connect(self.start_annotation)
+        # self.end_annotation_button.clicked.connect(self.end_annotation)
+        # annotation_controls.addWidget(self.start_annotation_button)
+        # annotation_controls.addWidget(self.end_annotation_button)
+        # left_panel.addLayout(annotation_controls)
         
         # # Add Column button, disabled due to same function implemented on clicking column +
         # self.add_column_button = QPushButton("Add Column")
@@ -322,6 +328,17 @@ class AnnotationTool(QMainWindow):
         else:
             self.update_annotation_table_for_record_level()
         self.is_switching_levels = False
+        
+        # Record start time for the current patient/record
+        current_id = self.get_current_id()
+        if current_id not in self.annotation_start_times:
+            self.annotation_start_times[current_id] = QDateTime.currentDateTime()
+
+    def get_current_id(self):
+        if self.patient_level_radio.isChecked():
+            return self.patient_id_combo.currentText()
+        else:
+            return self.record_id_combo.currentText()
 
     def display_format(self, record):
         title_text = ""
@@ -456,7 +473,7 @@ class AnnotationTool(QMainWindow):
             
             # Retrieve stored annotation data
             annotation_data = self.patient_annotations.get(patient_id, {})
-            for col, header in enumerate(self.patient_headers[4:-1]):  # Start from 'Time Cost', exclude '+'
+            for col, header in enumerate(self.patient_headers[4:-1]):  # Start from 'Annotation Start', exclude '+'
                 self.annotation_table.setItem(i, col + 4, QTableWidgetItem(annotation_data.get(header, '')))
 
     def update_annotation_table_for_record_level(self):
@@ -471,7 +488,7 @@ class AnnotationTool(QMainWindow):
             
             # Retrieve stored annotation data
             annotation_data = self.record_annotations.get(record['RecordID'], {})
-            for col, header in enumerate(self.record_headers[4:-1]):  # Start from 'Time Cost', exclude '+'
+            for col, header in enumerate(self.record_headers[4:-1]):  # Start from 'Annotation Start', exclude '+'
                 self.annotation_table.setItem(i, col + 4, QTableWidgetItem(annotation_data.get(header, '')))
 
     def update_keyword_table(self):
@@ -514,9 +531,39 @@ class AnnotationTool(QMainWindow):
             # header.setSectionResizeMode(current_column_count, QHeaderView.Stretch)
 
     def on_cell_changed(self, row, column):
-        if not self.is_switching_levels:
+        if not self.is_switching_levels and not self._is_updating:
             print(f"Cell changed: row {row}, column {column}")  # Debug print
-            self.save_current_annotations()
+            
+            ## record and show time
+            try:
+                self._is_updating = True
+                current_id = self.get_current_id()
+                if current_id in self.annotation_start_times:
+                    start_time = self.annotation_start_times[current_id]
+                    end_time = QDateTime.currentDateTime()
+                    time_cost = start_time.secsTo(end_time)
+                    time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
+                    
+                    # Update Time Cost column
+                    self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
+                    
+                    # Update Annotation Start column
+                    self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
+                    
+                    # Update Annotation End column
+                    self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
+                    
+                    # Reset start time for the next annotation
+                    self.annotation_start_times[current_id] = end_time
+                
+                self.save_current_annotations()
+            finally:
+                self._is_updating = False
+            
+    def get_column_index(self, column_name):
+        headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
+        return headers.index(column_name)
+
 
     def save_current_annotations(self):
         is_patient_level = self.patient_level_radio.isChecked()
@@ -545,43 +592,68 @@ class AnnotationTool(QMainWindow):
                     self.record_annotations[record_id][header] = item.text() if item else ''
                 # print("Record Annotations saved:", self.record_annotations)  # Debug print
 
+    def save_annotation_to_file(self):
+        if not self.csv_file_path:
+            self.csv_file_path, _ = QFileDialog.getSaveFileName(self, "Save Annotations", "", "CSV Files (*.csv)")
         
+        if self.csv_file_path:
+            try:
+                with open(self.csv_file_path, 'w', newline='') as csvfile:
+                    csv_writer = csv.writer(csvfile)
+                    
+                    # Write headers
+                    headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
+                    csv_writer.writerow(headers[:-1])  # Exclude the '+' column
+                    
+                    # Write data
+                    for row in range(self.annotation_table.rowCount()):
+                        row_data = []
+                        for col in range(self.annotation_table.columnCount() - 1):  # Exclude the '+' column
+                            item = self.annotation_table.item(row, col)
+                            row_data.append(item.text() if item else '')
+                        csv_writer.writerow(row_data)
+                
+                QMessageBox.information(self, "Save Successful!", f"Annotations saved to {self.csv_file_path}")
+            except Exception as e:
+                QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
+        else:
+            QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
 
-    def start_annotation(self):
-        if self.current_row is not None:
-            self.start_time = QDateTime.currentDateTime()
-            self.start_annotation_button.setEnabled(False)
-            self.end_annotation_button.setEnabled(True)
+    # def start_annotation(self):
+    #     if self.current_row is not None:
+    #         self.start_time = QDateTime.currentDateTime()
+    #         self.start_annotation_button.setEnabled(False)
+    #         self.end_annotation_button.setEnabled(True)
 
-    def end_annotation(self):
-        if self.start_time and self.current_row is not None:
-            end_time = QDateTime.currentDateTime()
-            time_cost = self.start_time.secsTo(end_time)
+    # def end_annotation(self):
+    #     if self.start_time and self.current_row is not None:
+    #         end_time = QDateTime.currentDateTime()
+    #         time_cost = self.start_time.secsTo(end_time)
             
-            # Format time cost as HH:MM:SS
-            time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
-            self.annotation_table.setItem(self.current_row, 4, QTableWidgetItem(time_cost_formatted))
+    #         # Format time cost as HH:MM:SS
+    #         time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
+    #         self.annotation_table.setItem(self.current_row, 4, QTableWidgetItem(time_cost_formatted))
             
-            self.start_time = None
-            self.start_annotation_button.setEnabled(True)
-            self.end_annotation_button.setEnabled(False)
+    #         self.start_time = None
+    #         self.start_annotation_button.setEnabled(True)
+    #         self.end_annotation_button.setEnabled(False)
 
     # def save_text_change(self, annotation_text):
     #     if self.current_row is not None and self.csv_file_path:
     #         self.annotation_table.setItem(self.current_row, 5, QTableWidgetItem(annotation_text))
     #         self.save_to_csv()
 
-    def save_to_csv(self):
-        if self.csv_file_path:
-            with open(self.csv_file_path, 'w', newline='') as csvfile:
-                csv_writer = csv.writer(csvfile)
-                csv_writer.writerow([self.annotation_table.horizontalHeaderItem(i).text() for i in range(self.annotation_table.columnCount())])
-                for row in range(self.annotation_table.rowCount()):
-                    row_data = []
-                    for col in range(self.annotation_table.columnCount()):
-                        item = self.annotation_table.item(row, col)
-                        row_data.append(item.text() if item else '')
-                    csv_writer.writerow(row_data)
+    # def save_to_csv(self):
+    #     if self.csv_file_path:
+    #         with open(self.csv_file_path, 'w', newline='') as csvfile:
+    #             csv_writer = csv.writer(csvfile)
+    #             csv_writer.writerow([self.annotation_table.horizontalHeaderItem(i).text() for i in range(self.annotation_table.columnCount())])
+    #             for row in range(self.annotation_table.rowCount()):
+    #                 row_data = []
+    #                 for col in range(self.annotation_table.columnCount()):
+    #                     item = self.annotation_table.item(row, col)
+    #                     row_data.append(item.text() if item else '')
+    #                 csv_writer.writerow(row_data)
 
 ## place holder if text edit is needed
 class AnnotationTextEdit(QTextEdit):
