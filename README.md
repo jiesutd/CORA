@@ -19,7 +19,8 @@ Author: [Jie Yang](https://jiesutd.github.io).
 
 Interface:
 ====
-CORA provides an annotation UI.
+CORA provides an efficient annotation GUI with customized keywords highlighted during the clinical health record annotation.
+
 * Annotator Interface:
  ![alt text](GUI-sample.png "Sample GUI")
 
