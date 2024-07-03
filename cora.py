@@ -47,8 +47,8 @@ class AnnotationTool(QMainWindow):
         self.custom_column_count = 0  # To keep track of added columns
         self.patient_annotations = {}  # To store patient-level annotations
         self.record_annotations = {}   # To store record-level annotations
-        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', '+']
-        self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', '+']
+        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation','Comment', '+']
+        self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', 'Comment', '+']
         self.load_keywords = {}
         self.annotation_start_times = {}
         
@@ -592,33 +592,39 @@ class AnnotationTool(QMainWindow):
         if not self.is_switching_levels and not self._is_updating:
             print(f"Cell changed: row {row}, column {column}")  # Debug print
             
-            ## record and show time
-            try:
-                self._is_updating = True
-                current_id = self.get_current_id()
-                if current_id in self.annotation_start_times:
-                    start_time = self.annotation_start_times[current_id]
-                    end_time = QDateTime.currentDateTime()
-                    time_cost = start_time.secsTo(end_time)
-                    time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
+            # Get the column name
+            column_name = self.annotation_table.horizontalHeaderItem(column).text()
+            # Check if the changed column is not "Comment"
+            if column_name != "Comment":
+                ## record and show time
+                try:
+                    self._is_updating = True
+                    current_id = self.get_current_id()
+                    if current_id in self.annotation_start_times:
+                        start_time = self.annotation_start_times[current_id]
+                        end_time = QDateTime.currentDateTime()
+                        time_cost = start_time.secsTo(end_time)
+                        time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
+                        
+                        # Update Time Cost column
+                        self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
+                        
+                        # Update Annotation Start column
+                        self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
+                        
+                        # Update Annotation End column
+                        self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
+                        
+                        # Reset start time for the next annotation
+                        self.annotation_start_times[current_id] = end_time
+                        # Reset current case start time
+                        self.current_case_start_time = QDateTime.currentDateTime()
                     
-                    # Update Time Cost column
-                    self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
-                    
-                    # Update Annotation Start column
-                    self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
-                    
-                    # Update Annotation End column
-                    self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
-                    
-                    # Reset start time for the next annotation
-                    self.annotation_start_times[current_id] = end_time
-                    # Reset current case start time
-                    self.current_case_start_time = QDateTime.currentDateTime()
-                
+                    self.save_current_annotations()
+                finally:
+                    self._is_updating = False
+            else: ## if the edit is in comment column
                 self.save_current_annotations()
-            finally:
-                self._is_updating = False
             
     def get_column_index(self, column_name):
         headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
