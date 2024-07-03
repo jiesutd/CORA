@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                              QPushButton, QLabel, QLineEdit, QTextEdit, QTableWidget, 
                              QTableWidgetItem, QHeaderView, QFileDialog, QMessageBox, QInputDialog,
-                             QListWidget, QComboBox, QDateEdit, QRadioButton, QButtonGroup, QGridLayout)
+                             QListWidget, QComboBox, QDateEdit, QRadioButton, QButtonGroup, QGridLayout, QCheckBox)
 from PyQt5.QtCore import Qt, QDateTime, QTime,  QDate, QTimer
 from PyQt5.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
 
@@ -50,6 +50,7 @@ class AnnotationTool(QMainWindow):
         self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation','Comment', '+']
         self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Annotation', 'Comment', '+']
         self.load_keywords = {}
+        self.extend_keywords = []
         self.annotation_start_times = {}
         
         # Create status bar
@@ -126,6 +127,13 @@ class AnnotationTool(QMainWindow):
         self.record_type_combo = QComboBox() 
         additional_filter_layout.addWidget(self.record_type_label)
         additional_filter_layout.addWidget(self.record_type_combo)
+        
+        # Add Power Highlight checkbox
+        self.power_highlight_checkbox = QCheckBox("Power Highlight")
+        self.power_highlight_checkbox.setChecked(False)  # Set to unchecked by default
+        self.power_highlight_checkbox.stateChanged.connect(self.highlight_keywords)
+        additional_filter_layout.addWidget(self.power_highlight_checkbox)
+        
         left_panel.addLayout(additional_filter_layout)
         
         # Connect droplist selection change events
@@ -394,8 +402,23 @@ class AnnotationTool(QMainWindow):
                     self.load_keywords[keyword.strip()] = label.strip()
                 else:
                     self.load_keywords[each_line] = ""
+            self.extend_existing_keywords()
             self.update_keyword_table()
             self.highlight_keywords()
+    
+    
+    def extend_existing_keywords(self):
+        english_stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "including", 'management', 'following', 'discharge', 'community', 'material', 'educational', 'progress']
+        for keyword, v in self.load_keywords.items():
+            special_chars = "!@#$%^&*()_+-={}[]:;\"'<>,.?/~`"
+            for char in special_chars:
+                keyword = keyword.replace(char, ' ')
+            subkeyword_list = keyword.split()
+            for subkeyword in subkeyword_list:
+                if subkeyword not in english_stop_words and len(subkeyword) > 7: ## keep non stop word and long word only
+                    self.extend_keywords.append(subkeyword)
+        self.extend_keywords = list(set(self.extend_keywords))
+        print("Extend keyword num:", len(self.extend_keywords))
         
     def update_status_bar(self):
         # Update patient count
@@ -428,6 +451,8 @@ class AnnotationTool(QMainWindow):
         keywords = [keyword for keyword in self.keyword_entry.text().split(',') if keyword.strip()]
         keywords += self.load_keywords.keys()
         keywords = [keyword.strip().lower() for keyword in keywords]
+        if self.power_highlight_checkbox.isChecked(): ## power highlight model
+            keywords += self.extend_keywords 
         # Clear previous highlights
         cursor = self.text_display.textCursor()
         cursor.select(QTextCursor.Document)
@@ -443,13 +468,12 @@ class AnnotationTool(QMainWindow):
         text = document.toPlainText().lower()
 
         # Highlight keywords
-        for keyword in keywords:
+        for keyword in set(keywords):
             start_index = 0
             while True:
                 index = text.find(keyword, start_index)
                 if index == -1:
                     break
-                
                 # Select and highlight the original text (preserving case)
                 cursor = QTextCursor(document)
                 cursor.setPosition(index)

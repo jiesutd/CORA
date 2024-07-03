@@ -21,7 +21,7 @@ CORA provides an efficient annotation GUI with customized keywords highlighted d
 
 
 - [ ] Add text display settings (font size, line number)  
-- [ ] Add `power highlight` model, to highlight more relevant terms
+- [x] Add `power highlight` model, to highlight more relevant terms
 - [ ] Support more data format (json, txt, database)
 - [ ] Save and load project (not annotation result)
 - [ ] Add button for next/previous patient/record
