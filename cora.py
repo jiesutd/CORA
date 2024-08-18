@@ -7,6 +7,7 @@
 
 import sys
 import csv
+import pickle
 import xml.etree.ElementTree as ET
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                              QPushButton, QLabel, QLineEdit, QTextEdit, QTableWidget, 
@@ -17,25 +18,35 @@ from PyQt5.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
 
 ## enable adjust column width of annotation panel
 class EditableHeaderView(QHeaderView):
-    def __init__(self, orientation, parent):
+    def __init__(self, orientation, parent, annotation_tool=None):
         super().__init__(orientation, parent)
         self.setSectionsClickable(True)
         self.sectionDoubleClicked.connect(self.edit_header)
+        self.annotation_tool = annotation_tool
+        
 
     def edit_header(self, logicalIndex):
-        if logicalIndex < 5:  # Prevent editing the first 5 columns
+        if logicalIndex < 7:  # Prevent editing the first 7 columns
             return
         
         currentName = self.model().headerData(logicalIndex, self.orientation(), Qt.DisplayRole)
         newName, ok = QInputDialog.getText(self, "Edit Column Name", "Enter new name:", text=currentName)
         if ok and newName:
             self.model().setHeaderData(logicalIndex, self.orientation(), newName, Qt.DisplayRole)
-
+        
+        # Update the headers in AnnotationTool
+        if self.annotation_tool != None:
+            updated_columns = [self.model().headerData(i, Qt.Horizontal, Qt.DisplayRole) for i in range(self.model().columnCount())]
+            if self.annotation_tool.patient_level_radio.isChecked():
+                self.annotation_tool.patient_headers = updated_columns
+            else:
+                self.annotation_tool.record_headers = updated_columns
+            
+            print("Updated headers:", updated_columns)
 
 class AnnotationTool(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
         self.current_row = None
         self.csv_file_path = None
         self.column_names = []
@@ -52,6 +63,7 @@ class AnnotationTool(QMainWindow):
         self.load_keywords = {}
         self.extend_keywords = []
         self.annotation_start_times = {}
+        self.initUI()
         
         # Create status bar
         self.statusBar = self.statusBar()
@@ -88,10 +100,17 @@ class AnnotationTool(QMainWindow):
         left_panel = QVBoxLayout()
         main_layout.addLayout(left_panel, 1)
         
+        load_level_layout = QHBoxLayout()
         ## add file load button
         self.load_button = QPushButton("Load XML File")
         self.load_button.clicked.connect(self.load_file)
-        left_panel.addWidget(self.load_button)
+        load_level_layout.addWidget(self.load_button)
+        # ##  TODO: load project
+        # self.load_project_button = QPushButton("Load Project")
+        # self.load_project_button.clicked.connect(self.load_project)
+        # load_level_layout.addWidget(self.load_project_button)
+        
+        left_panel.addLayout(load_level_layout)
         # Add radio buttons for annotation level, patient level or record level
         annotation_level_layout = QHBoxLayout()
         self.annotation_level_label = QLabel("Annotation Level:")
@@ -113,8 +132,10 @@ class AnnotationTool(QMainWindow):
         filter_layout = QHBoxLayout()
         self.patient_id_label = QLabel("Patient ID:")
         self.patient_id_combo = QComboBox()
+        self.patient_id_combo.addItem("All")
         self.record_id_label = QLabel("Record ID:")
         self.record_id_combo = QComboBox()
+        self.record_id_combo.addItem("All")
                
         filter_layout.addWidget(self.patient_id_label)
         filter_layout.addWidget(self.patient_id_combo)
@@ -125,6 +146,7 @@ class AnnotationTool(QMainWindow):
         additional_filter_layout = QHBoxLayout()
         self.record_type_label = QLabel("Record Type:")
         self.record_type_combo = QComboBox() 
+        self.record_type_combo.addItem("All")
         additional_filter_layout.addWidget(self.record_type_label)
         additional_filter_layout.addWidget(self.record_type_combo)
         
@@ -173,10 +195,15 @@ class AnnotationTool(QMainWindow):
         left_panel.addWidget(self.keyword_table)        
         
         ## add file save button
-        self.save_button = QPushButton("Save Annotation")
-        self.save_button.clicked.connect(self.save_annotation_to_file)
-        left_panel.addWidget(self.save_button)
-        
+        save_level_layout = QHBoxLayout()
+        self.export_button = QPushButton("Export Annotation")
+        self.export_button.clicked.connect(self.save_annotation_to_file)
+        save_level_layout.addWidget(self.export_button)
+        ## TODO: save project
+        # self.save_project_button = QPushButton("Save Project")
+        # self.save_project_button.clicked.connect(self.save_project)
+        # save_level_layout.addWidget(self.save_project_button)
+        left_panel.addLayout(save_level_layout)
         # # Annotation controls
         # annotation_controls = QHBoxLayout()
         # self.start_annotation_button = QPushButton("Start Annotation")
@@ -210,10 +237,10 @@ class AnnotationTool(QMainWindow):
         self.annotation_table.setColumnCount(7)
         
         # Create and set the custom header
-        custom_header = EditableHeaderView(Qt.Horizontal, self.annotation_table)
+        custom_header = EditableHeaderView(Qt.Horizontal, self.annotation_table, self)
         self.annotation_table.setHorizontalHeader(custom_header)
         
-        self.annotation_table.setHorizontalHeaderLabels(['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Time Cost', 'Annotation', "+"])
+        self.annotation_table.setHorizontalHeaderLabels(self.patient_headers)  ## default in patient headers
         self.annotation_table.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
         right_panel.addWidget(self.annotation_table)
         # Connect the header click event add new column
@@ -258,7 +285,10 @@ class AnnotationTool(QMainWindow):
             self.update_droplists()
             self.update_display()
             # Set CSV file path
-            self.csv_file_path = file_path.rsplit('.', 1)[0] + '_annotations.csv'
+            if self.patient_level_radio.isChecked():
+                self.csv_file_path = file_path.rsplit('.', 1)[0] + '_patient_annotations.csv'
+            else:
+                self.csv_file_path = file_path.rsplit('.', 1)[0] + '_note_annotations.csv'
             # Reset total time cost and current case time
             self.total_time_cost = 0
             self.current_case_start_time = QDateTime.currentDateTime()
@@ -283,6 +313,7 @@ class AnnotationTool(QMainWindow):
         patient_ids = set(record['PatientID'] for record in self.records)
         record_ids = set(record['RecordID'] for record in self.records)
         record_types = set(record['Record_Type'] for record in self.records)
+        print(record_types)
         
         self.patient_id_combo.clear()
         self.record_id_combo.clear()
@@ -293,9 +324,10 @@ class AnnotationTool(QMainWindow):
         
         self.record_id_combo.addItem("All")
         self.record_id_combo.addItems(sorted(record_ids))
-        
+
         self.record_type_combo.addItem("All")
         self.record_type_combo.addItems(sorted(record_types))
+
         # self.update_record_id_droplist_with_patient("All")
 
 
@@ -484,6 +516,7 @@ class AnnotationTool(QMainWindow):
         self.highlight_title()
 
     def highlight_title(self):
+        print("run highlight title")
         ## direct match, no case conversion
         # Define highlight format
         highlight_format = QTextCharFormat()
@@ -494,6 +527,7 @@ class AnnotationTool(QMainWindow):
         text = document.toPlainText()
 
         # Highlight keywords
+        print("title list:", self.title_list)
         for keyword in self.title_list:
             print("title highlight, ", keyword)
             start_index = 0
@@ -708,6 +742,69 @@ class AnnotationTool(QMainWindow):
                 QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
         else:
             QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
+
+
+
+    def save_project(self):
+        file_path, _ = QFileDialog.getSaveFileName(self, "Save Project", "", "Project Files (*.proj)")
+        if file_path:
+            project_data = {
+                'records': self.records,
+                'filtered_records': self.filtered_records,
+                'patient_annotations': self.patient_annotations,
+                'record_annotations': self.record_annotations,
+                'title_list': self.title_list,
+                'patient_headers': self.patient_headers,
+                'record_headers': self.record_headers,
+                'load_keywords': self.load_keywords,
+                'extend_keywords': self.extend_keywords,
+                'total_time_cost': self.total_time_cost,
+                'current_case_start_time': self.current_case_start_time,
+                'annotation_start_times': self.annotation_start_times,
+                # Add any other data you want to save
+            }
+            try:
+                with open(file_path, 'wb') as f:
+                    pickle.dump(project_data, f)
+                QMessageBox.information(self, "Success", "Project saved successfully!")
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Failed to save project: {str(e)}")
+
+
+    def load_project(self):
+        # The above Python code snippet is loading a project file using a file dialog (`QFileDialog`)
+        # in a PyQt application. It reads the project data from the selected file using
+        # `pickle.load`, which deserializes the data previously saved in the file.
+        file_path, _ = QFileDialog.getOpenFileName(self, "Load Project", "", "Project Files (*.proj)")
+        if file_path:
+            try:
+                with open(file_path, 'rb') as f:
+                    project_data = pickle.load(f)
+                print("Load file")
+                # Restore project data
+                self.records = project_data['records']
+                self.filtered_records = project_data['filtered_records']
+                self.patient_annotations = project_data['patient_annotations']
+                self.record_annotations = project_data['record_annotations']
+                self.title_list = project_data['title_list']
+                self.patient_headers = project_data['patient_headers']
+                self.record_headers = project_data['record_headers']
+                self.load_keywords = project_data['load_keywords']
+                self.extend_keywords = project_data['extend_keywords']
+                self.total_time_cost = project_data['total_time_cost']
+                self.current_case_start_time = project_data['current_case_start_time']
+                self.annotation_start_times = project_data['annotation_start_times']
+                # Restore any other data you saved
+                # Update UI
+                self.update_droplists()  ##TODO, when load stored project file, this function will be stucked.
+                self.update_display()
+                self.update_keyword_table()
+
+                
+                QMessageBox.information(self, "Success", "Project loaded successfully!")
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Failed to load project: {str(e)}")
+
 
     # def start_annotation(self):
     #     if self.current_row is not None:
