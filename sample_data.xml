@@ -1,4 +1,4 @@
-<CHANL_xml>
+<CORA_xml>
     <ROW>
         <COLUMN NAME="PatientID"> 12345</COLUMN>
         <COLUMN NAME="RecordID"> 999999</COLUMN>
@@ -1310,4 +1310,4 @@ In case of a crisis or emergency, the patient is instructed to go to the nearest
 Summary:
 The patient has shown improvement during the hospital stay and is discharged with a comprehensive plan for ongoing care and support. It is essential that the patient adheres to the follow-up appointments and therapeutic interventions to ensure continued progress and stability. </COLUMN>
  </ROW>
-</CHANL_xml>
+</CORA_xml>

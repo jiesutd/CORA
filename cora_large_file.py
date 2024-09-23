@@ -89,7 +89,7 @@ class AnnotationTool(QMainWindow):
         self.current_case_start_time = QDateTime.currentDateTime()
 
     def initUI(self):
-        self.setWindowTitle('CORA-alpha')
+        self.setWindowTitle('CORA-UC2')
         self.setGeometry(100, 100, 1600, 800)
 
         central_widget = QWidget()
@@ -128,6 +128,8 @@ class AnnotationTool(QMainWindow):
         annotation_level_layout.addWidget(self.record_level_radio)
         left_panel.addLayout(annotation_level_layout)
 
+        ## disable the auto calling of combo update function, which include update_display. This will make the code slow
+        
         # Add droplists for PatientID and RecordID
         filter_layout = QHBoxLayout()
         self.patient_id_label = QLabel("Patient ID:")
@@ -277,6 +279,7 @@ class AnnotationTool(QMainWindow):
         main_layout.setStretch(1, 5)  # Right panel
 
     def load_file(self):
+        print("load_file.")
         self.is_switching_levels = True ## assume first load file as switch level to disable annotation saving
         file_path, _ = QFileDialog.getOpenFileName(self, "Open XML File", "", "XML Files (*.xml)")
         if file_path:
@@ -295,7 +298,7 @@ class AnnotationTool(QMainWindow):
         self.is_switching_levels = False
         
     def parse_xml(self, file_path):
-        
+        print("parse_xml for file: ", file_path)
         tree = ET.parse(file_path)
         root = tree.getroot()
         records = []
@@ -311,14 +314,19 @@ class AnnotationTool(QMainWindow):
         return records
 
     def update_droplists(self):
+        print("update_droplists.")
         patient_ids = set(record['PatientID'] for record in self.records)
         record_ids = set(record['RecordID'] for record in self.records)
         record_types = set(record['Record_Type'] for record in self.records)
-        print(record_types)
+        # print(record_types)
         
         self.patient_id_combo.clear()
         self.record_id_combo.clear()
         self.record_type_combo.clear()
+        
+        self.patient_id_combo.blockSignals(True)
+        self.record_id_combo.blockSignals(True)
+        self.record_type_combo.blockSignals(True)
         
         self.patient_id_combo.addItem("All")
         self.patient_id_combo.addItems(sorted(patient_ids))
@@ -328,14 +336,22 @@ class AnnotationTool(QMainWindow):
 
         self.record_type_combo.addItem("All")
         self.record_type_combo.addItems(sorted(record_types))
+        
+        self.patient_id_combo.blockSignals(False)
+        self.record_id_combo.blockSignals(False)
+        self.record_type_combo.blockSignals(False)
 
         # self.update_record_id_droplist_with_patient("All")
 
 
     def update_record_id_droplist_with_patient(self, selected_patient):
+        print("update_record_id_droplist_with_patient.")
+        self.record_id_combo.blockSignals(True)
         self.record_id_combo.clear()
         if selected_patient == "All":
+            
             self.record_id_combo.addItem("All")
+            
             record_ids = set(record['RecordID'] for record in self.records)
         else:
             record_ids = set(record['RecordID'] for record in self.records if record['PatientID'] == selected_patient)
@@ -343,11 +359,16 @@ class AnnotationTool(QMainWindow):
         print("select patient id:", selected_patient)
         ## TODO: sort records with date
         self.record_id_combo.addItems(["All"] +sorted(record_ids))
+        self.record_id_combo.blockSignals(False)
+        
 
     def update_record_id_droplist_with_record_type(self, selected_type):
+        print("update_record_id_droplist_with_record_type.")
+        self.record_id_combo.blockSignals(True)
         self.record_id_combo.clear()
         if selected_type == "All":
             self.record_id_combo.addItem("All")
+            self.record_id_combo.blockSignals(False)
             record_ids = set(record['RecordID'] for record in self.records)
         else:
             record_ids = set(record['RecordID'] for record in self.records if record['Record_Type'] == selected_type)
@@ -355,17 +376,21 @@ class AnnotationTool(QMainWindow):
         print("select record type:", selected_type)
         ## TODO: sort records with date
         self.record_id_combo.addItems(["All"] +sorted(record_ids))
+        self.record_id_combo.blockSignals(False)
 
     def on_patient_id_changed(self, selected_patient):
+        print("on_patient_id_changed.")
         self.update_record_id_droplist_with_patient(selected_patient)
         self.update_display()
         
     def on_record_type_changed(self, selected_record_type):
+        print("on_record_type_changed.")
         self.update_record_id_droplist_with_record_type(selected_record_type)
         self.update_display()
 
 
     def update_display(self):
+        print("update_display.")
         selected_patient = self.patient_id_combo.currentText()
         selected_record_type = self.record_type_combo.currentText()
         selected_record = self.record_id_combo.currentText()
@@ -388,7 +413,10 @@ class AnnotationTool(QMainWindow):
         self.title_list = [self.display_format(a)[1] for a in self.filtered_records]
         
         ## highlight
-        self.highlight_keywords()
+        full_highlight = True 
+        if selected_patient == "All":
+            full_highlight = False
+        self.highlight_keywords(full_highlight)
         # self.highlight_title()
         
         # Update annotation table based on the selected annotation level
@@ -414,17 +442,19 @@ class AnnotationTool(QMainWindow):
             return self.record_id_combo.currentText()
 
     def display_format(self, record):
+        # print("display_format.")
         title_text = ""
         for name in self.column_names:
             if name != 'Record':
                 title_text += name +": " + record[name] +", "
         title_text = title_text.strip(", ")
         structure_text = title_text +"\n"
-        print(structure_text)
+        # print("display format:",structure_text)
         structure_text += "Record:\n"+record["Record"]+"\n"
         return structure_text, title_text
 
     def load_keyword_file(self):
+        print("load_keyword_file.")
         file_path, _ = QFileDialog.getOpenFileName(self, "Open txt File", "", "TXT Files (*.txt)")
         if file_path:
             keyword_texts = open(file_path, "r").readlines()
@@ -437,11 +467,16 @@ class AnnotationTool(QMainWindow):
                     self.load_keywords[each_line] = ""
             self.extend_existing_keywords()
             self.update_keyword_table()
-            self.highlight_keywords()
+            selected_patient = self.patient_id_combo.currentText()
+            full_highlight = True
+            if selected_patient == 'All':
+                full_highlight = False
+            self.highlight_keywords(full_highlight)
     
     
     def extend_existing_keywords(self):
-        english_stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "including", 'management', 'following', 'discharge', 'community', 'material', 'educational', 'progress']
+        print("extend_existing_keywords.")
+        english_stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "including", 'management', 'following', 'discharge', 'community', 'material', 'educational', 'progress', 'reported', 'reviewed', 'encounter', 'provider', 'description', 'available', 'duration', 'document', 'affected', 'frequency', 'component', 'clinical', 'specified', 'evaluation', 'protocol', 'positive', 'subsequent', 'multiple', 'unspecified', 'healthcare', 'patients', 'providers']
         for keyword, v in self.load_keywords.items():
             special_chars = "!@#$%^&*()_+-={}[]:;\"'<>,.?/~`"
             for char in special_chars:
@@ -454,6 +489,7 @@ class AnnotationTool(QMainWindow):
         print("Extend keyword num:", len(self.extend_keywords))
         
     def update_status_bar(self):
+        # print("update status bar.")
         # Update patient count
         total_patients = len(set(record['PatientID'] for record in self.records))
         self.patient_count_label.setText(f"Total Patients: {total_patients}")
@@ -480,7 +516,8 @@ class AnnotationTool(QMainWindow):
         case_time_str = f"{case_hours:02d}:{case_minutes:02d}:{case_seconds:02d}"
         self.current_case_time_label.setText(f"Current Case Time: {case_time_str}")
 
-    def highlight_keywords(self):
+    def highlight_keywords(self, full_highlight=True):
+        print("Highlight keywords, highlight all:", full_highlight)
         keywords = [keyword for keyword in self.keyword_entry.text().split(',') if keyword.strip()]
         keywords += self.load_keywords.keys()
         keywords = [keyword.strip().lower() for keyword in keywords]
@@ -491,33 +528,38 @@ class AnnotationTool(QMainWindow):
         cursor.select(QTextCursor.Document)
         cursor.setCharFormat(QTextCharFormat())
         cursor.clearSelection()
-
+        print("a")
         # Define highlight format
         highlight_format = QTextCharFormat()
         highlight_format.setForeground(QColor(Qt.red))
-
+        print("a")
         # Get the entire document text and convert to lowercase for searching
         document = self.text_display.document()
         text = document.toPlainText().lower()
+        if full_highlight != False or type(full_highlight) != type(False):
+            # text_length = len(text)
+            # text = text[:min(text_length, 10000)]
+            cursor = QTextCursor(document)
+            # Highlight keywords
+            print("a")
+            for keyword in set(keywords):
+                start_index = 0
+                while True:
+                    index = text.find(keyword, start_index)
+                    if index == -1:
+                        break
+                    # Select and highlight the original text (preserving case)
+                    
+                    cursor.setPosition(index)
+                    cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(keyword))
+                    cursor.mergeCharFormat(highlight_format)
+                    start_index = index + len(keyword)
+            print("Highlight keywords complete.")
+        self.highlight_title(full_highlight)
+        
 
-        # Highlight keywords
-        for keyword in set(keywords):
-            start_index = 0
-            while True:
-                index = text.find(keyword, start_index)
-                if index == -1:
-                    break
-                # Select and highlight the original text (preserving case)
-                cursor = QTextCursor(document)
-                cursor.setPosition(index)
-                cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(keyword))
-                cursor.mergeCharFormat(highlight_format)
-                
-                start_index = index + len(keyword)
-        self.highlight_title()
-
-    def highlight_title(self):
-        print("run highlight for lines starting with 'PatientID: '")
+    def highlight_title(self,full_highlight ):
+        print("highlight_title,  highlight all: ", full_highlight)
 
         # Define highlight format
         highlight_format = QTextCharFormat()
@@ -529,22 +571,25 @@ class AnnotationTool(QMainWindow):
 
         # Split the text into lines
         lines = text.split('\n')
-
+        cursor = QTextCursor(document)
         # Highlight lines that start with "PatientID: "
         for line_number, line in enumerate(lines):
-            if line.startswith("PatientID: "):
-                print(f"Highlighting line {line_number}: {line}")
+            if full_highlight != False or type(full_highlight) != type(False):
+                # if line_number > 300:
+                #     break
+                if line.startswith("PatientID: "):
+                    print(f"Highlighting title line {line_number}: {line},  highlight all: {full_highlight}")
 
-                # Calculate the position of the start of the line in the entire text
-                start_index = text.find(line)
+                    # Calculate the position of the start of the line in the entire text
+                    start_index = text.find(line)
 
-                # Select and highlight the entire line
-                cursor = QTextCursor(document)
-                cursor.setPosition(start_index)
-                cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(line))
-                cursor.mergeCharFormat(highlight_format)
+                    # Select and highlight the entire line
+                    
+                    cursor.setPosition(start_index)
+                    cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(line))
+                    cursor.mergeCharFormat(highlight_format)
         
-        print("highlighting complete")
+        print("highlighting title complete.")
 
     # def highlight_title(self):
     #     print("run highlight for 'PatientID: '")
@@ -654,7 +699,7 @@ class AnnotationTool(QMainWindow):
                 patient_data[patient_id]['start_date'] = min(patient_data[patient_id]['start_date'], record['Record_Date'])
                 patient_data[patient_id]['end_date'] = max(patient_data[patient_id]['end_date'], record['Record_Date'])
 
-        for i, (patient_id, data) in enumerate(patient_data.items()):
+        for i, (patient_id, data) in enumerate(sorted(patient_data.items())):
             self.annotation_table.insertRow(i)
             self.annotation_table.setItem(i, 0, QTableWidgetItem(patient_id))
             self.annotation_table.setItem(i, 1, QTableWidgetItem(str(data['record_count'] + 1)))
