@@ -379,12 +379,12 @@ class AnnotationTool(QMainWindow):
         self.record_id_combo.blockSignals(False)
 
     def on_patient_id_changed(self, selected_patient):
-        print("on_patient_id_changed.")
+        print("on_patient_id_changed. selected patient:", selected_patient)
         self.update_record_id_droplist_with_patient(selected_patient)
         self.update_display()
         
     def on_record_type_changed(self, selected_record_type):
-        print("on_record_type_changed.")
+        print("on_record_type_changed. selected record type: ", selected_record_type)
         self.update_record_id_droplist_with_record_type(selected_record_type)
         self.update_display()
 
@@ -835,6 +835,7 @@ class AnnotationTool(QMainWindow):
                     self.record_annotations[record_id][header] = item.text() if item else ''
                 # print("Record Annotations saved:", self.record_annotations)  # Debug print
 
+
     def save_annotation_to_file(self):
         if not self.csv_file_path:
             self.csv_file_path, _ = QFileDialog.getSaveFileName(self, "Save Annotations", "", "CSV Files (*.csv)")
@@ -844,24 +845,56 @@ class AnnotationTool(QMainWindow):
                 with open(self.csv_file_path, 'w', newline='') as csvfile:
                     csv_writer = csv.writer(csvfile)
                     
-                    # Write headers
+                    # Write headers based on the selected annotation level
                     headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
-                    csv_writer.writerow(headers[:-1])  # Exclude the '+' column
-                    
-                    # Write data
-                    for row in range(self.annotation_table.rowCount()):
-                        row_data = []
-                        for col in range(self.annotation_table.columnCount() - 1):  # Exclude the '+' column
-                            item = self.annotation_table.item(row, col)
-                            row_data.append(item.text() if item else '')
-                        csv_writer.writerow(row_data)
-                
+                    csv_writer.writerow(headers[:-1])  # Exclude the last "+" column
+
+                    # Save patient-level annotations
+                    if self.patient_level_radio.isChecked():
+                        for record in self.records:
+                            patient_id = record['PatientID']
+
+                            # Default data for patient
+                            row_data = [
+                                patient_id,
+                                str(len([r for r in self.records if r['PatientID'] == patient_id])),  # Record count
+                                record.get('Record_Date', ''),  # Start date
+                                record.get('Record_Date', ''),  # End date
+                            ]
+
+                            # Add annotation data if exists, else empty
+                            annotations = self.patient_annotations.get(patient_id, {})
+                            for header in self.patient_headers[4:-1]:  # Skip the first few and last '+' column
+                                row_data.append(annotations.get(header, ''))
+
+                            csv_writer.writerow(row_data)
+
+                    # Save record-level annotations
+                    else:
+                        for record in self.records:
+                            patient_id = record['PatientID']
+                            record_id = record['RecordID']
+
+                            # Default data for record
+                            row_data = [
+                                patient_id,
+                                record_id,
+                                record.get('Record_Date', ''),
+                                record.get('Record_Type', ''),
+                            ]
+
+                            # Add annotation data if exists, else empty
+                            annotations = self.record_annotations.get(record_id, {})
+                            for header in self.record_headers[4:-1]:  # Skip the first few and last '+' column
+                                row_data.append(annotations.get(header, ''))
+
+                            csv_writer.writerow(row_data)
+
                 QMessageBox.information(self, "Save Successful!", f"Annotations saved to {self.csv_file_path}")
             except Exception as e:
                 QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
         else:
             QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
-
 
 
     def save_project(self):
