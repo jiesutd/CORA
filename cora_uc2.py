@@ -58,12 +58,19 @@ class AnnotationTool(QMainWindow):
         self.custom_column_count = 0  # To keep track of added columns
         self.patient_annotations = {}  # To store patient-level annotations
         self.record_annotations = {}   # To store record-level annotations
-        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost', 'Self-harm','RecordID','Comment', '+']
+        self.patient_headers = ['Patient ID', 'Record Count', 'Start Date', 'End Date', 'Annotation Start', 'Annotation End', 'Time Cost',
+                                'Self-harm','Self-harm date',
+                                'Suicide','Suicide date',
+                                'Comment', '+']
         self.record_headers = ['PatientID', 'RecordID', 'Record_Date', 'Record_Type', 'Annotation Start', 'Annotation End', 'Time Cost', 'Self-harm', 'Comment', '+']
         self.load_keywords = {}
         self.extend_keywords = []
         self.annotation_start_times = {}
         self.initUI()
+        
+        self.current_patient_id = "All"
+        self.current_record_id = "All"
+        self.current_record_type = "All"
         
         # Create status bar
         self.statusBar = self.statusBar()
@@ -380,6 +387,7 @@ class AnnotationTool(QMainWindow):
 
     def on_patient_id_changed(self, selected_patient):
         print("on_patient_id_changed. selected patient:", selected_patient)
+        self.time_track_update(selected_patient)
         self.update_record_id_droplist_with_patient(selected_patient)
         self.update_display()
         
@@ -772,36 +780,74 @@ class AnnotationTool(QMainWindow):
             # Get the column name
             column_name = self.annotation_table.horizontalHeaderItem(column).text()
             # Check if the changed column is not "Comment"
-            if column_name != "Comment":
-                ## record and show time
-                try:
-                    self._is_updating = True
-                    current_id = self.get_current_id()
-                    if current_id in self.annotation_start_times:
-                        start_time = self.annotation_start_times[current_id]
-                        end_time = QDateTime.currentDateTime()
-                        time_cost = start_time.secsTo(end_time)
-                        time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
+            # if column_name != "Comment":
+            #     ## record and show time
+            #     try:
+            #         self._is_updating = True
+            #         current_id = self.get_current_id()
+            #         if current_id in self.annotation_start_times:
+            #             start_time = self.annotation_start_times[current_id]
+            #             end_time = QDateTime.currentDateTime()
+            #             time_cost = start_time.secsTo(end_time)
+            #             time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
                         
-                        # Update Time Cost column
-                        self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
+            #             # Update Time Cost column
+            #             self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
                         
-                        # Update Annotation Start column
-                        self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
+            #             # Update Annotation Start column
+            #             self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
                         
-                        # Update Annotation End column
-                        self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
+            #             # Update Annotation End column
+            #             self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
                         
-                        # Reset start time for the next annotation
-                        self.annotation_start_times[current_id] = end_time
-                        # Reset current case start time
-                        self.current_case_start_time = QDateTime.currentDateTime()
+            #             # Reset start time for the next annotation
+            #             self.annotation_start_times[current_id] = end_time
+            #             # # Reset current case start time
+            #             # self.current_case_start_time = QDateTime.currentDateTime()
                     
-                    self.save_current_annotations()
-                finally:
-                    self._is_updating = False
-            else: ## if the edit is in comment column
-                self.save_current_annotations()
+            #         self.save_current_annotations()
+            #     finally:
+            #         self._is_updating = False
+            # else: ## if the edit is in comment column
+            #     self.save_current_annotations()
+            self.save_current_annotations()
+            
+                
+    def time_track_update(self, new_selected):
+        combined_annotation_results = ""
+        for col in range(self.get_column_index("Time Cost")+1, self.annotation_table.columnCount()):
+            value = self.annotation_table.item(0,col)
+            if value is None:
+                continue
+            combined_annotation_results +=value.text().strip()
+        time_cost_cell_value = self.annotation_table.item(0,self.get_column_index("Time Cost"))
+        ## only update case that has been annotated
+        print("time track.....................................",time_cost_cell_value)
+        if  (time_cost_cell_value is None or time_cost_cell_value.text().strip() == "") and combined_annotation_results != "":
+            print("add value")
+            if self.patient_level_radio.isChecked():
+                ## save time information for previous selected
+                previous_id = self.current_patient_id
+                self.current_patient_id = new_selected
+                if previous_id != "All":
+                    previous_end_time = QDateTime.currentDateTime()
+                    previous_time_cost =   self.current_case_start_time.secsTo(previous_end_time)
+                    previous_time_cost_formatted = QTime(0, 0).addSecs(previous_time_cost).toString('hh:mm:ss')
+                    if not self.is_switching_levels and not self._is_updating:
+                        try:
+                            self._is_updating = True
+                            # Update Time Cost column
+                            self.annotation_table.setItem(0, self.get_column_index('Time Cost'), QTableWidgetItem(previous_time_cost_formatted))
+                            # Update Annotation Start column
+                            self.annotation_table.setItem(0, self.get_column_index('Annotation Start'), QTableWidgetItem(self.current_case_start_time.toString('yyyy-MM-dd hh:mm:ss')))
+                            # Update Annotation End column
+                            self.annotation_table.setItem(0, self.get_column_index('Annotation End'), QTableWidgetItem(previous_end_time.toString('yyyy-MM-dd hh:mm:ss')))
+                            self.save_current_annotations()
+                        finally:
+                            self._is_updating = False
+        ## for new selected 
+        if new_selected != "All":
+            self.current_case_start_time = QDateTime.currentDateTime() 
             
     def get_column_index(self, column_name):
         headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
@@ -835,7 +881,6 @@ class AnnotationTool(QMainWindow):
                     self.record_annotations[record_id][header] = item.text() if item else ''
                 # print("Record Annotations saved:", self.record_annotations)  # Debug print
 
-
     def save_annotation_to_file(self):
         if not self.csv_file_path:
             self.csv_file_path, _ = QFileDialog.getSaveFileName(self, "Save Annotations", "", "CSV Files (*.csv)")
@@ -849,27 +894,43 @@ class AnnotationTool(QMainWindow):
                     headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
                     csv_writer.writerow(headers[:-1])  # Exclude the last "+" column
 
-                    # Save patient-level annotations
+                    # Save patient-level annotations (grouped by patient)
                     if self.patient_level_radio.isChecked():
+                        # Gather data for each patient
+                        patient_data = {}
+
                         for record in self.records:
                             patient_id = record['PatientID']
+                            if patient_id not in patient_data:
+                                # Initialize patient-level data with the first record's details
+                                patient_data[patient_id] = {
+                                    'Record Count': 1,
+                                    'Start Date': record['Record_Date'],
+                                    'End Date': record['Record_Date']
+                                }
+                            else:
+                                # Update record count, start date, and end date for this patient
+                                patient_data[patient_id]['Record Count'] += 1
+                                patient_data[patient_id]['Start Date'] = min(patient_data[patient_id]['Start Date'], record['Record_Date'])
+                                patient_data[patient_id]['End Date'] = max(patient_data[patient_id]['End Date'], record['Record_Date'])
 
-                            # Default data for patient
+                        # Write patient-level data to CSV
+                        for patient_id, data in patient_data.items():
                             row_data = [
                                 patient_id,
-                                str(len([r for r in self.records if r['PatientID'] == patient_id])),  # Record count
-                                record.get('Record_Date', ''),  # Start date
-                                record.get('Record_Date', ''),  # End date
+                                str(data['Record Count']),
+                                data['Start Date'],
+                                data['End Date']
                             ]
 
-                            # Add annotation data if exists, else empty
+                            # Add annotation data if available, else empty
                             annotations = self.patient_annotations.get(patient_id, {})
-                            for header in self.patient_headers[4:-1]:  # Skip the first few and last '+' column
+                            for header in self.patient_headers[4:-1]:  # Skip the first few and last "+" column
                                 row_data.append(annotations.get(header, ''))
 
                             csv_writer.writerow(row_data)
 
-                    # Save record-level annotations
+                    # Save record-level annotations (for each individual record)
                     else:
                         for record in self.records:
                             patient_id = record['PatientID']
@@ -880,12 +941,12 @@ class AnnotationTool(QMainWindow):
                                 patient_id,
                                 record_id,
                                 record.get('Record_Date', ''),
-                                record.get('Record_Type', ''),
+                                record.get('Record_Type', '')
                             ]
 
                             # Add annotation data if exists, else empty
                             annotations = self.record_annotations.get(record_id, {})
-                            for header in self.record_headers[4:-1]:  # Skip the first few and last '+' column
+                            for header in self.record_headers[4:-1]:  # Skip the first few and last "+" column
                                 row_data.append(annotations.get(header, ''))
 
                             csv_writer.writerow(row_data)
@@ -895,6 +956,67 @@ class AnnotationTool(QMainWindow):
                 QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
         else:
             QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
+
+
+    # def save_annotation_to_file(self):
+    #     if not self.csv_file_path:
+    #         self.csv_file_path, _ = QFileDialog.getSaveFileName(self, "Save Annotations", "", "CSV Files (*.csv)")
+        
+    #     if self.csv_file_path:
+    #         try:
+    #             with open(self.csv_file_path, 'w', newline='') as csvfile:
+    #                 csv_writer = csv.writer(csvfile)
+                    
+    #                 # Write headers based on the selected annotation level
+    #                 headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
+    #                 csv_writer.writerow(headers[:-1])  # Exclude the last "+" column
+
+    #                 # Save patient-level annotations
+    #                 if self.patient_level_radio.isChecked():
+    #                     for record in self.records:
+    #                         patient_id = record['PatientID']
+
+    #                         # Default data for patient
+    #                         row_data = [
+    #                             patient_id,
+    #                             str(len([r for r in self.records if r['PatientID'] == patient_id])),  # Record count
+    #                             record.get('Record_Date', ''),  # Start date
+    #                             record.get('Record_Date', ''),  # End date
+    #                         ]
+
+    #                         # Add annotation data if exists, else empty
+    #                         annotations = self.patient_annotations.get(patient_id, {})
+    #                         for header in self.patient_headers[4:-1]:  # Skip the first few and last '+' column
+    #                             row_data.append(annotations.get(header, ''))
+
+    #                         csv_writer.writerow(row_data)
+
+    #                 # Save record-level annotations
+    #                 else:
+    #                     for record in self.records:
+    #                         patient_id = record['PatientID']
+    #                         record_id = record['RecordID']
+
+    #                         # Default data for record
+    #                         row_data = [
+    #                             patient_id,
+    #                             record_id,
+    #                             record.get('Record_Date', ''),
+    #                             record.get('Record_Type', ''),
+    #                         ]
+
+    #                         # Add annotation data if exists, else empty
+    #                         annotations = self.record_annotations.get(record_id, {})
+    #                         for header in self.record_headers[4:-1]:  # Skip the first few and last '+' column
+    #                             row_data.append(annotations.get(header, ''))
+
+    #                         csv_writer.writerow(row_data)
+
+    #             QMessageBox.information(self, "Save Successful!", f"Annotations saved to {self.csv_file_path}")
+    #         except Exception as e:
+    #             QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
+    #     else:
+    #         QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
 
 
     def save_project(self):
