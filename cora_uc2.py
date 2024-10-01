@@ -4,7 +4,7 @@
  # @ Last Modified by: Jie Yang  Contact: jieynlp@gmail.com
  '''
 # -*- coding: utf-8 -*-
-
+import re, time
 import sys
 import csv
 import pickle
@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QH
                              QTableWidgetItem, QHeaderView, QFileDialog, QMessageBox, QInputDialog,
                              QListWidget, QComboBox, QDateEdit, QRadioButton, QButtonGroup, QGridLayout, QCheckBox)
 from PyQt5.QtCore import Qt, QDateTime, QTime,  QDate, QTimer
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
 from PyQt5.QtCore import QRegularExpression
 ## enable adjust column width of annotation panel
@@ -94,6 +95,9 @@ class AnnotationTool(QMainWindow):
         # Initialize total time cost and current case time
         self.total_time_cost = 0
         self.current_case_start_time = QDateTime.currentDateTime()
+        
+        self.keywords = []
+        self.match_pattern = ""
 
     def initUI(self):
         self.setWindowTitle('CORA-UC2')
@@ -162,7 +166,7 @@ class AnnotationTool(QMainWindow):
         # Add Power Highlight checkbox
         self.power_highlight_checkbox = QCheckBox("Power Highlight")
         self.power_highlight_checkbox.setChecked(False)  # Set to unchecked by default
-        self.power_highlight_checkbox.stateChanged.connect(self.highlight_keywords)
+        self.power_highlight_checkbox.stateChanged.connect(self.update_keyword_entry)
         additional_filter_layout.addWidget(self.power_highlight_checkbox)
         
         left_panel.addLayout(additional_filter_layout)
@@ -187,7 +191,7 @@ class AnnotationTool(QMainWindow):
         # Highlight Second row: Entry field
         self.keyword_entry = QLineEdit()
         keyword_layout.addWidget(self.keyword_entry)
-        self.keyword_entry.returnPressed.connect(self.highlight_keywords)
+        self.keyword_entry.returnPressed.connect(self.update_keyword_entry)
         left_panel.addLayout(keyword_layout)
         
         # Highlight third row, keyword table
@@ -326,15 +330,14 @@ class AnnotationTool(QMainWindow):
         record_ids = set(record['RecordID'] for record in self.records)
         record_types = set(record['Record_Type'] for record in self.records)
         # print(record_types)
-        
-        self.patient_id_combo.clear()
-        self.record_id_combo.clear()
-        self.record_type_combo.clear()
-        
         self.patient_id_combo.blockSignals(True)
         self.record_id_combo.blockSignals(True)
         self.record_type_combo.blockSignals(True)
         
+        self.patient_id_combo.clear()
+        self.record_id_combo.clear()
+        self.record_type_combo.clear()
+         
         self.patient_id_combo.addItem("All")
         self.patient_id_combo.addItems(sorted(patient_ids))
         
@@ -350,19 +353,24 @@ class AnnotationTool(QMainWindow):
 
         # self.update_record_id_droplist_with_patient("All")
 
+    def update_keyword_entry(self):
+        self.keyword_update()
+        selected_patient = self.patient_id_combo.currentText()
+        full_highlight = True 
+        if selected_patient == 'All':
+            full_highlight = False 
+        self.highlight_keywords(full_highlight)
 
     def update_record_id_droplist_with_patient(self, selected_patient):
         print("update_record_id_droplist_with_patient.")
         self.record_id_combo.blockSignals(True)
         self.record_id_combo.clear()
         if selected_patient == "All":
-            
             self.record_id_combo.addItem("All")
-            
             record_ids = set(record['RecordID'] for record in self.records)
         else:
             record_ids = set(record['RecordID'] for record in self.records if record['PatientID'] == selected_patient)
-        print("update record id:", record_ids)
+        # print("update record id:", record_ids)
         print("select patient id:", selected_patient)
         ## TODO: sort records with date
         self.record_id_combo.addItems(["All"] +sorted(record_ids))
@@ -470,21 +478,31 @@ class AnnotationTool(QMainWindow):
                 each_line = each_line.strip()
                 if "|" in each_line:
                     keyword, label = each_line.rsplit("|", 1)
-                    self.load_keywords[keyword.strip()] = label.strip()
+                    self.load_keywords[keyword.strip().lower()] = label.strip()
                 else:
-                    self.load_keywords[each_line] = ""
+                    self.load_keywords[each_line.lower()] = ""
             self.extend_existing_keywords()
             self.update_keyword_table()
             selected_patient = self.patient_id_combo.currentText()
             full_highlight = True
             if selected_patient == 'All':
                 full_highlight = False
+                    # Combine all keywords into a single regex pattern, using word boundaries to match whole words
+            self.keyword_update()
             self.highlight_keywords(full_highlight)
+    
+    def keyword_update(self):
+        keywords = [keyword for keyword in self.keyword_entry.text().split(',') if keyword.strip()]
+        keywords += self.load_keywords.keys()
+        if self.power_highlight_checkbox.isChecked():  # power highlight model
+            keywords += self.extend_keywords
+        self.keywords = list(set([keyword.strip().lower() for keyword in keywords]))
+        self.match_pattern = r'|'.join(re.escape(keyword.lower()) for keyword in set(self.keywords))
     
     
     def extend_existing_keywords(self):
         print("extend_existing_keywords.")
-        english_stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "including", 'management', 'following', 'discharge', 'community', 'material', 'educational', 'progress', 'reported', 'reviewed', 'encounter', 'provider', 'description', 'available', 'duration', 'document', 'affected', 'frequency', 'component', 'clinical', 'specified', 'evaluation', 'protocol', 'positive', 'subsequent', 'multiple', 'unspecified', 'healthcare', 'patients', 'providers']
+        english_stop_words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "including", 'management', 'following', 'discharge', 'community', 'material', 'educational', 'progress', 'reported', 'reviewed', 'encounter', 'provider', 'description', 'available', 'duration', 'document', 'affected', 'frequency', 'component', 'clinical', 'specified', 'evaluation', 'protocol', 'positive', 'subsequent', 'multiple', 'unspecified', 'healthcare', 'patients', 'providers', 'physician', 'department', 'associated', 'specific', 'medication', 'medications', 'continue', 'application', 'topically', 'frequency', 'education', 'questionnaire', 'children', 'resident', 'administered', 'actually', 'vaccines', 'columbia', 'structure', 'elsewhere', 'relevant', 'presently', 'systemically', 'programs', 'involving', 'definitely', 'treatment', 'combinations', 'necessary', 'symptoms', 'previous', 'increased', 'excluding', 'demonstrates', 'building', 'individual', 'guidelines', 'algorithm', 'pipeline', 'belongings', 'sequencing', 'clinician', 'affecting', 'obtained', 'primarily', 'athletics', 'electric', 'sustained', 'learning', 'daughter', 'systemic', 'swimming', 'recognizes', 'representatives', 'identify', 'smartphone', 'teaching', 'detailed' ]
         for keyword, v in self.load_keywords.items():
             special_chars = "!@#$%^&*()_+-={}[]:;\"'<>,.?/~`"
             for char in special_chars:
@@ -495,6 +513,7 @@ class AnnotationTool(QMainWindow):
                     self.extend_keywords.append(subkeyword)
         self.extend_keywords = list(set(self.extend_keywords))
         print("Extend keyword num:", len(self.extend_keywords))
+        
         
     def update_status_bar(self):
         # print("update status bar.")
@@ -524,152 +543,102 @@ class AnnotationTool(QMainWindow):
         case_time_str = f"{case_hours:02d}:{case_minutes:02d}:{case_seconds:02d}"
         self.current_case_time_label.setText(f"Current Case Time: {case_time_str}")
 
+    # # Modify the highlight_keywords method to use threading
+    # def highlight_keywords(self, full_highlight=True):
+    #     start_time = time.time()
+    #     print("     Highlight keywords, highlight all:", full_highlight, ", keyword number:", len(self.keywords))
+        
+    #     if len(self.keywords) > 0 and full_highlight:
+    #         # Clear previous highlights
+    #         cursor = self.text_display.textCursor()
+    #         cursor.select(QTextCursor.Document)
+    #         cursor.setCharFormat(QTextCharFormat())  # Reset the format
+    #         cursor.clearSelection()
+
+    #         # Define highlight format
+    #         highlight_format = QTextCharFormat()
+    #         highlight_format.setForeground(QColor(Qt.red))
+
+    #         # Get the entire document text and convert to lowercase for searching
+    #         document = self.text_display.document()
+
+    #         # Create and start a worker thread for highlighting
+    #         self.highlight_worker = HighlightWorker(document, self.match_pattern, highlight_format)
+    #         self.highlight_worker.finished.connect(self.on_highlight_finished)  # Connect the signal to a slot
+    #         self.highlight_worker.start()  # Start the worker thread
+
+    # def on_highlight_finished(self, time_cost):
+    #     print(f"        Highlight keywords complete. Time cost: {time_cost:.4f} seconds.")
+    #     self.highlight_title(True)  # Assuming `highlight_title` is part of the main UI update
+
     def highlight_keywords(self, full_highlight=True):
-        print("Highlight keywords, highlight all:", full_highlight)
-        keywords = [keyword for keyword in self.keyword_entry.text().split(',') if keyword.strip()]
-        keywords += self.load_keywords.keys()
-        keywords = [keyword.strip().lower() for keyword in keywords]
-        if self.power_highlight_checkbox.isChecked(): ## power highlight model
-            keywords += self.extend_keywords 
-        # Clear previous highlights
-        cursor = self.text_display.textCursor()
-        cursor.select(QTextCursor.Document)
-        cursor.setCharFormat(QTextCharFormat())
-        cursor.clearSelection()
-        print("a")
-        # Define highlight format
-        highlight_format = QTextCharFormat()
-        highlight_format.setForeground(QColor(Qt.red))
-        print("a")
-        # Get the entire document text and convert to lowercase for searching
-        document = self.text_display.document()
-        text = document.toPlainText().lower()
-        if full_highlight != False or type(full_highlight) != type(False):
+        start_time = time.time()
+        print("     Highlight keywords, highlight all:", full_highlight, ", keyword number:", len(self.keywords))
+        if len(self.keywords) >0  and (full_highlight != False or type(full_highlight) != type(False)):
+            # Clear previous highlights
+            cursor = self.text_display.textCursor()
+            cursor.select(QTextCursor.Document)
+            cursor.setCharFormat(QTextCharFormat())
+            cursor.clearSelection()
+
+            # Define highlight format
+            highlight_format = QTextCharFormat()
+            highlight_format.setForeground(QColor(Qt.red))
+
+            # Get the entire document text and convert to lowercase for searching
+            document = self.text_display.document()
+            text = document.toPlainText().lower()
+            
             # text_length = len(text)
             # text = text[:min(text_length, 10000)]
             cursor = QTextCursor(document)
             # Highlight keywords
-            print("a")
-            for keyword in set(keywords):
+            for keyword in set(self.keywords):
                 start_index = 0
                 while True:
                     index = text.find(keyword, start_index)
                     if index == -1:
                         break
                     # Select and highlight the original text (preserving case)
-                    
                     cursor.setPosition(index)
                     cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(keyword))
                     cursor.mergeCharFormat(highlight_format)
                     start_index = index + len(keyword)
-            print("Highlight keywords complete.")
-        self.highlight_title(full_highlight)
+        time_cost = time.time() - start_time
+        print(f"     Highlight keywords complete. Time cost: {time_cost:.4f} seconds.")
         
+        self.highlight_title(full_highlight)
 
-    def highlight_title(self,full_highlight ):
-        print("highlight_title,  highlight all: ", full_highlight)
-
+    def highlight_title(self, full_highlight):
+        start_time = time.time()
+        print("     Highlight_title,  highlight all: ", full_highlight)
         # Define highlight format
         highlight_format = QTextCharFormat()
         highlight_format.setBackground(QColor(Qt.yellow))
-
         # Get the entire document text
         document = self.text_display.document()
         text = document.toPlainText()
-
         # Split the text into lines
         lines = text.split('\n')
         cursor = QTextCursor(document)
+        # Track the starting position of each line
+        current_position = 0  # Start position at the beginning of the document
         # Highlight lines that start with "PatientID: "
         for line_number, line in enumerate(lines):
-            if full_highlight != False or type(full_highlight) != type(False):
-                # if line_number > 300:
-                #     break
+            if full_highlight:
                 if line.startswith("PatientID: "):
-                    print(f"Highlighting title line {line_number}: {line},  highlight all: {full_highlight}")
-
-                    # Calculate the position of the start of the line in the entire text
-                    start_index = text.find(line)
-
+                    # Calculate the start index of the current line
+                    start_index = current_position
                     # Select and highlight the entire line
-                    
                     cursor.setPosition(start_index)
                     cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(line))
                     cursor.mergeCharFormat(highlight_format)
-        
-        print("highlighting title complete.")
 
-    # def highlight_title(self):
-    #     print("run highlight for 'PatientID: '")
+            # Update `current_position` to the start index of the next line
+            current_position += len(line) + 1  # +1 to account for the newline character
+        time_cost = time.time() - start_time
+        print(f"     Highlighting title complete. Time cost: {time_cost:.4f} seconds.")
 
-    #     # Define highlight format
-    #     highlight_format = QTextCharFormat()
-    #     highlight_format.setBackground(QColor(Qt.yellow))
-
-    #     # Get the entire document text
-    #     document = self.text_display.document()
-    #     text = document.toPlainText()
-
-    #     # Keyword to search
-    #     keyword = "PatientID: "
-
-    #     # Start searching for the keyword in the document text
-    #     start_index = 0
-    #     while True:
-    #         # Find the index of the next occurrence of "PatientID: "
-    #         index = text.find(keyword, start_index)
-
-    #         # If no more occurrences are found, exit the loop
-    #         if index == -1:
-    #             break
-
-    #         # Select and highlight the entire line starting with "PatientID: "
-    #         cursor = QTextCursor(document)
-    #         cursor.setPosition(index)
-            
-    #         # Move cursor to the end of the line (until the next newline character or end of text)
-    #         end_of_line = text.find('\n', index)
-    #         if end_of_line == -1:
-    #             end_of_line = len(text)  # If no newline, highlight till the end of the text
-            
-    #         # Move and highlight the entire line
-    #         cursor.setPosition(index)
-    #         cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, end_of_line - index)
-    #         cursor.mergeCharFormat(highlight_format)
-
-    #         # Move to the next occurrence
-    #         start_index = end_of_line + 1
-
-    #     print("highlighting complete")
-
-    # def highlight_title(self):
-    #     print("run highlight title")
-    #     ## direct match, no case conversion
-    #     # Define highlight format
-    #     highlight_format = QTextCharFormat()
-    #     highlight_format.setBackground(QColor(Qt.yellow))
-
-    #     # Get the entire document text and convert to lowercase for searching
-    #     document = self.text_display.document()
-    #     text = document.toPlainText()
-
-    #     # Highlight keywords
-    #     print("title list:", self.title_list)
-    #     for keyword in self.title_list:
-    #         print("title highlight, ", keyword)
-    #         start_index = 0
-    #         while True:
-    #             index = text.find(keyword, start_index)
-    #             if index == -1:
-    #                 break
-                
-    #             # Select and highlight the original text (preserving case)
-    #             cursor = QTextCursor(document)
-    #             cursor.setPosition(index)
-    #             cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(keyword))
-    #             cursor.mergeCharFormat(highlight_format)
-                
-    #             start_index = index + len(keyword)
                 
     ## event for annotation change
     def on_annotation_level_changed(self):
@@ -743,7 +712,6 @@ class AnnotationTool(QMainWindow):
             self.keyword_table.setItem(i, 1, QTableWidgetItem(label))
 
                 
-                
     ## add new column through table head
     def onHeaderClicked(self, logicalIndex):
         if logicalIndex == self.annotation_table.columnCount() - 1:  # If the "+" column is clicked
@@ -776,40 +744,8 @@ class AnnotationTool(QMainWindow):
     def on_cell_changed(self, row, column):
         if not self.is_switching_levels and not self._is_updating:
             print(f"Cell changed: row {row}, column {column}")  # Debug print
-            
             # Get the column name
             column_name = self.annotation_table.horizontalHeaderItem(column).text()
-            # Check if the changed column is not "Comment"
-            # if column_name != "Comment":
-            #     ## record and show time
-            #     try:
-            #         self._is_updating = True
-            #         current_id = self.get_current_id()
-            #         if current_id in self.annotation_start_times:
-            #             start_time = self.annotation_start_times[current_id]
-            #             end_time = QDateTime.currentDateTime()
-            #             time_cost = start_time.secsTo(end_time)
-            #             time_cost_formatted = QTime(0, 0).addSecs(time_cost).toString('hh:mm:ss')
-                        
-            #             # Update Time Cost column
-            #             self.annotation_table.setItem(row, self.get_column_index('Time Cost'), QTableWidgetItem(time_cost_formatted))
-                        
-            #             # Update Annotation Start column
-            #             self.annotation_table.setItem(row, self.get_column_index('Annotation Start'), QTableWidgetItem(start_time.toString('yyyy-MM-dd hh:mm:ss')))
-                        
-            #             # Update Annotation End column
-            #             self.annotation_table.setItem(row, self.get_column_index('Annotation End'), QTableWidgetItem(end_time.toString('yyyy-MM-dd hh:mm:ss')))
-                        
-            #             # Reset start time for the next annotation
-            #             self.annotation_start_times[current_id] = end_time
-            #             # # Reset current case start time
-            #             # self.current_case_start_time = QDateTime.currentDateTime()
-                    
-            #         self.save_current_annotations()
-            #     finally:
-            #         self._is_updating = False
-            # else: ## if the edit is in comment column
-            #     self.save_current_annotations()
             self.save_current_annotations()
             
                 
@@ -821,18 +757,21 @@ class AnnotationTool(QMainWindow):
                 continue
             combined_annotation_results +=value.text().strip()
         time_cost_cell_value = self.annotation_table.item(0,self.get_column_index("Time Cost"))
+        previous_id = self.current_patient_id
+        self.current_patient_id = new_selected
+        print("Patient Id change: %s -> %s "%(previous_id, self.current_patient_id))
         ## only update case that has been annotated
-        print("time track.....................................",time_cost_cell_value)
+        print("time track.....................................", ", combined annotated value:", combined_annotation_results)
         if  (time_cost_cell_value is None or time_cost_cell_value.text().strip() == "") and combined_annotation_results != "":
             print("add value")
             if self.patient_level_radio.isChecked():
                 ## save time information for previous selected
-                previous_id = self.current_patient_id
-                self.current_patient_id = new_selected
+                
                 if previous_id != "All":
                     previous_end_time = QDateTime.currentDateTime()
                     previous_time_cost =   self.current_case_start_time.secsTo(previous_end_time)
                     previous_time_cost_formatted = QTime(0, 0).addSecs(previous_time_cost).toString('hh:mm:ss')
+                    print("if condition:", self.is_switching_levels, self._is_updating)
                     if not self.is_switching_levels and not self._is_updating:
                         try:
                             self._is_updating = True
@@ -958,67 +897,6 @@ class AnnotationTool(QMainWindow):
             QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
 
 
-    # def save_annotation_to_file(self):
-    #     if not self.csv_file_path:
-    #         self.csv_file_path, _ = QFileDialog.getSaveFileName(self, "Save Annotations", "", "CSV Files (*.csv)")
-        
-    #     if self.csv_file_path:
-    #         try:
-    #             with open(self.csv_file_path, 'w', newline='') as csvfile:
-    #                 csv_writer = csv.writer(csvfile)
-                    
-    #                 # Write headers based on the selected annotation level
-    #                 headers = self.patient_headers if self.patient_level_radio.isChecked() else self.record_headers
-    #                 csv_writer.writerow(headers[:-1])  # Exclude the last "+" column
-
-    #                 # Save patient-level annotations
-    #                 if self.patient_level_radio.isChecked():
-    #                     for record in self.records:
-    #                         patient_id = record['PatientID']
-
-    #                         # Default data for patient
-    #                         row_data = [
-    #                             patient_id,
-    #                             str(len([r for r in self.records if r['PatientID'] == patient_id])),  # Record count
-    #                             record.get('Record_Date', ''),  # Start date
-    #                             record.get('Record_Date', ''),  # End date
-    #                         ]
-
-    #                         # Add annotation data if exists, else empty
-    #                         annotations = self.patient_annotations.get(patient_id, {})
-    #                         for header in self.patient_headers[4:-1]:  # Skip the first few and last '+' column
-    #                             row_data.append(annotations.get(header, ''))
-
-    #                         csv_writer.writerow(row_data)
-
-    #                 # Save record-level annotations
-    #                 else:
-    #                     for record in self.records:
-    #                         patient_id = record['PatientID']
-    #                         record_id = record['RecordID']
-
-    #                         # Default data for record
-    #                         row_data = [
-    #                             patient_id,
-    #                             record_id,
-    #                             record.get('Record_Date', ''),
-    #                             record.get('Record_Type', ''),
-    #                         ]
-
-    #                         # Add annotation data if exists, else empty
-    #                         annotations = self.record_annotations.get(record_id, {})
-    #                         for header in self.record_headers[4:-1]:  # Skip the first few and last '+' column
-    #                             row_data.append(annotations.get(header, ''))
-
-    #                         csv_writer.writerow(row_data)
-
-    #             QMessageBox.information(self, "Save Successful!", f"Annotations saved to {self.csv_file_path}")
-    #         except Exception as e:
-    #             QMessageBox.critical(self, "Save Failed!", f"An error occurred while saving: {str(e)}")
-    #     else:
-    #         QMessageBox.warning(self, "Save Cancelled!", "Annotation saving was cancelled.")
-
-
     def save_project(self):
         file_path, _ = QFileDialog.getSaveFileName(self, "Save Project", "", "Project Files (*.proj)")
         if file_path:
@@ -1116,7 +994,51 @@ class AnnotationTool(QMainWindow):
     #                     row_data.append(item.text() if item else '')
     #                 csv_writer.writerow(row_data)
 
-## place holder if text edit is needed
+# Define a worker class for highlighting
+import re
+
+class HighlightWorker(QThread):
+    finished = pyqtSignal(float)  # Signal to indicate the thread has finished, with time cost as parameter
+
+    def __init__(self, document, keyword_pattern, highlight_format):
+        super().__init__()
+        self.document = document
+        self.highlight_format = highlight_format
+        self.keyword_pattern = keyword_pattern
+
+    def run(self):
+        # Perform the highlighting operation
+        start_time = time.time()
+
+        # Get the original text and the length
+        original_text = self.document.toPlainText()
+        text_lower = original_text.lower()  # Lowercased version for keyword searching
+        text_length = len(original_text)  # Get the total length of the document
+
+
+
+        # Find all occurrences of keywords in one pass
+        matches = list(re.finditer(self.keyword_pattern, text_lower))
+        
+        # Create a cursor for the document
+        cursor = QTextCursor(self.document)
+
+        # Iterate through the matches and highlight them
+        for match in matches:
+            start_index = match.start()  # Get start position of the match
+            keyword = match.group()      # Get the matched keyword text
+
+            # Set the cursor to the start position and select the keyword
+            cursor.setPosition(start_index)
+            cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(keyword))
+
+            # Apply the highlight format
+            cursor.mergeCharFormat(self.highlight_format)
+
+        time_cost = time.time() - start_time
+        self.finished.emit(time_cost)  # Emit the signal when done
+
+
 class AnnotationTextEdit(QTextEdit):
     def __init__(self, parent):
         super().__init__(parent)
