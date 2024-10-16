@@ -1,9 +1,8 @@
-
 # CORA: Clinical Optimized Record Annotation tool
 
-CORA is an efficient annotation tool to optimize manual annotation process of clinical records. 
+CORA is an efficient annotation tool to optimize manual annotation process of clinical records.
 
-This GUI annotation tool is developed with PyQt5 package in Python. 
+This GUI annotation tool is developed with PyQt5 package in Python.
 
 System required: Python 3.6 or above
 
@@ -14,14 +13,14 @@ Author: [Jie Yang](https://jiesutd.github.io).
 CORA provides an efficient annotation GUI with customized keywords highlighted during the clinical health record annotation.
 
 * Annotator Interface:
- ![alt text](GUI-sample.png "Sample GUI")
-
+  ![alt text](GUI-sample.png "Sample GUI")
+* Automatic Time Cost calculation:
+  CORA will record the time cost for each annotation. Annotator needs to select specific "Patient ID" first and then annotate the specific case, the time cost will be automatical recorded after the annotater switched to another "Patient ID".
 
 ### TO DO
 
-
-- [ ] Add text display settings (font size, line number)  
-- [x] Add `power highlight` model, to highlight more relevant terms
+- [ ] Add text display settings (font size, line number)
+- [X] Add `power highlight` model, to highlight more relevant terms
 - [ ] Support more data format (json, txt, database)
 - [ ] Save and load project (not annotation result)
 - [ ] Add button for next/previous patient/record
@@ -29,10 +28,11 @@ CORA provides an efficient annotation GUI with customized keywords highlighted d
 - [ ] Include claims labels and EHR records, visualize the time distribution
 - [ ] Discuss with users within division for needs
 - [ ] Add result calculation and visualization
-- [ ] Link to MGB or division datamarts database data selection and filter (maybe a different tool) 
+- [ ] Link to MGB or division datamarts database data selection and filter (maybe a different tool)
 - [ ] Add AI recommendation (statistical ML, classical deep learning, LLMs), long-term plan
 - [ ] Experiments and manuscript
 
 ### Updating...
 
-* 2024-June-25, project launched.
+* 2024-10-15, speed optimization, and time calculation update
+* 2024-06-25, project launched.
