@@ -1,4 +1,4 @@
-![CORA Logo](https://github.com/jiesutd/CORA/blob/master/cora_logo.png) 
+![CORA Logo](https://github.com/jiesutd/CORA/blob/main/cora_logo.png) 
 
 # CORA: Clinical Optimized Record Annotation tool
 
