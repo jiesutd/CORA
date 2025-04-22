@@ -99,7 +99,7 @@ class AnnotationTool(QMainWindow):
         self.match_pattern = ""
 
     def initUI(self):
-        self.setWindowTitle('CORA-UC2')
+        self.setWindowTitle('CORA')
         self.setGeometry(100, 100, 1600, 800)
 
         central_widget = QWidget()
